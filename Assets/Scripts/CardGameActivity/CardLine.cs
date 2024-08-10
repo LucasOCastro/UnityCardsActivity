@@ -88,8 +88,6 @@ namespace CardGameActivity
         
         public void HandleMouse(Vector3 collisionPoint, bool click, ref Card dragged)
         {
-            if (cards.Count == 0) return;
-            
             // Calcular o índice da carta baseado na posição do mouse na linha
             float localX = transform.InverseTransformPoint(collisionPoint).x;
             float normalizedX = localX / TotalWidth + .5f;
@@ -97,7 +95,7 @@ namespace CardGameActivity
 
             if (dragged)
                 HandleDragCard(localX, index, click, ref dragged);
-            else 
+            else
                 HandleHover(index, click, ref dragged);
         }
         
@@ -106,13 +104,17 @@ namespace CardGameActivity
             _draggedLocalX = localX;
             dragged.transform.localPosition = new(localX, 0, -dragCardHeightOffset);
             if (!click) return;
+
+            if (cards.Count > 0)
+            {
+                //Se o mouse está à direita da carta mais próxima, vai inserir no próximo índice
+                int newIndex = Mathf.Clamp(closestIndex, 0, cards.Count - 1);
+                if (localX > GetCenterXForCardIndex(newIndex))
+                    newIndex++;
+                cards.Insert(newIndex, dragged);
+            }
+            else cards.Add(dragged);
             
-            //Se o mouse está à direita da carta mais próxima, vai inserir no próximo índice
-            int newIndex = Mathf.Clamp(closestIndex, 0, cards.Count - 1);
-            if (localX > GetCenterXForCardIndex(closestIndex))
-                newIndex++;
-            
-            cards.Insert(newIndex, dragged); 
             dragged = null;
             _draggedLocalX = null;
         }
