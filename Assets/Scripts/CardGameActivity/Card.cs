@@ -30,5 +30,15 @@ namespace CardGameActivity
             
             titleText.text = cardDef.Title;
         }
+
+        /// <summary>
+        /// Troca o parent, rotaciona e escala a carta para adequar a uma fileira.
+        /// </summary>
+        public void AdjustToCardLine(CardLine line)
+        {
+            transform.parent = line.transform;
+            transform.forward = line.transform.forward;
+            transform.localScale = Vector3.one;
+        }
     }
 }

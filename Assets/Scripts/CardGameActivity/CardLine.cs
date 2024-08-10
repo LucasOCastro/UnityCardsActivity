@@ -16,9 +16,9 @@ namespace CardGameActivity
         
         /// <summary> Índice da carta a qual o mouse está em cima, deve ser destacada. </summary>
         private int _highlightedIndex = -1;
-        
-        private Card _dragging;
-        private float _draggedLocalX;
+
+        /// <summary> Posição local da carta sendo arrastada. </summary>
+        private float? _draggedLocalX;
         
         /// <summary>
         /// A largura total, da borda esquerda da primeira carta à borda direita da última carta.
@@ -44,6 +44,7 @@ namespace CardGameActivity
         {
             PositionCards();
             _highlightedIndex = -1;
+            _draggedLocalX = null;
         }
 
         /// <summary>
@@ -58,10 +59,11 @@ namespace CardGameActivity
             Vector3 offsetBetweenCards = new(OffsetBetweenCardCenters, 0, 0);
             for (int i = 0; i < cards.Count; i++)
             {
+                cards[i].AdjustToCardLine(this);
                 var card = cards[i].transform;
                 
                 //Se tem uma carta sendo arrastada, afasta as cartas em volta pra mostrar onde vai ser inserido.
-                if (!_dragging)
+                if (_draggedLocalX == null)
                     card.localPosition = pos;
                 else if (pos.x < _draggedLocalX)
                     card.localPosition = pos - new Vector3(cardWidth * .5f, 0, 0);
@@ -71,10 +73,6 @@ namespace CardGameActivity
                 //Se o mouse está em cima da carta, levanta ela um pouco pra indicar que vai ser selecionada.
                 if (i == _highlightedIndex)
                     card.position -= transform.forward * hoverCardHeightOffset;
-                
-                // transform.forward = lado oposto às frentes das cartas
-                // A frente das cartas deve estar virada para -transform.forward
-                card.forward = transform.forward;
 
                 pos += offsetBetweenCards;
             }
@@ -82,7 +80,7 @@ namespace CardGameActivity
 
         #region MOUSE_HANDLING
         
-        public void HandleMouse(Vector3 collisionPoint, bool click)
+        public void HandleMouse(Vector3 collisionPoint, bool click, ref Card dragged)
         {
             if (cards.Count == 0) return;
             
@@ -91,16 +89,16 @@ namespace CardGameActivity
             float normalizedX = localX / TotalWidth + .5f;
             int index = (int)(normalizedX * cards.Count);
 
-            if (_dragging)
-                HandleDragCard(localX, index, click);
+            if (dragged)
+                HandleDragCard(localX, index, click, ref dragged);
             else 
-                HandleHover(index, click);
+                HandleHover(index, click, ref dragged);
         }
         
-        private void HandleDragCard(float localX, int closestIndex, bool click) 
+        private void HandleDragCard(float localX, int closestIndex, bool click, ref Card dragged) 
         {
             _draggedLocalX = localX;
-            _dragging.transform.localPosition = new(localX, 0, -dragCardHeightOffset);
+            dragged.transform.localPosition = new(localX, 0, -dragCardHeightOffset);
             if (!click) return;
             
             //Se o mouse está à direita da carta mais próxima, vai inserir no próximo índice
@@ -108,17 +106,19 @@ namespace CardGameActivity
             if (localX > GetCenterXForCardIndex(closestIndex))
                 newIndex++;
             
-            cards.Insert(newIndex, _dragging); 
-            _dragging = null;
+            cards.Insert(newIndex, dragged); 
+            dragged = null;
+            _draggedLocalX = null;
         }
 
-        private void HandleHover(int index, bool click)
+        private void HandleHover(int index, bool click, ref Card dragged)
         {
             if (index < 0 || index >= cards.Count) return;
 
             if (click)
             {
-                _dragging = cards[index];
+                dragged = cards[index];
+                _draggedLocalX = GetCenterXForCardIndex(index);
                 cards.RemoveAt(index);
             }
             else _highlightedIndex = index;

@@ -15,6 +15,8 @@ namespace CardGameActivity
         [SerializeField] private float maxClickDistance = 100;
         [SerializeField] private LayerMask clickLayerMask;
 
+        private Card _selectedCard;
+        
         private void Update()
         {
             HandleMousePos();
@@ -29,9 +31,10 @@ namespace CardGameActivity
 
             if (!collision.collider.gameObject.TryGetComponent<CardLine>(out var cardLine))
                 return;
-            
+
             bool isClick = Input.GetMouseButtonDown(0);
-            cardLine.HandleMouse(collision.point, isClick);
+            if (_selectedCard) _selectedCard.AdjustToCardLine(cardLine);
+            cardLine.HandleMouse(collision.point, isClick, ref _selectedCard);
         }
     }
 }
