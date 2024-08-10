@@ -571,6 +571,7 @@ MonoBehaviour:
   cardWidth: 2
   cardSpacing: 1
   hoverCardHeightOffset: 0.5
+  dragCardHeightOffset: 1
   cards:
   - {fileID: 1640236598}
   - {fileID: 1480341913}
@@ -677,6 +678,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7123595750025747339, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
+      propertyPath: m_text
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -747,6 +752,10 @@ PrefabInstance:
     - target: {fileID: 2744812865576755799, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
       propertyPath: m_Name
       value: Card (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123595750025747339, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
+      propertyPath: m_text
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -819,6 +828,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 7123595750025747339, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
+      propertyPath: m_text
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -889,6 +902,12 @@ PrefabInstance:
     - target: {fileID: 2744812865576755799, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
       propertyPath: m_Name
       value: Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123595750025747339, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
+      propertyPath: m_text
+      value: '0
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -965,6 +984,10 @@ PrefabInstance:
     - target: {fileID: 2744812865576755799, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
       propertyPath: m_Name
       value: Card (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7123595750025747339, guid: 633c7a4a63f56de4b9516347558fbec4, type: 3}
+      propertyPath: m_text
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
