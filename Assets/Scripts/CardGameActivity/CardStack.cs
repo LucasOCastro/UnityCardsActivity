@@ -2,6 +2,9 @@
 
 namespace CardGameActivity
 {
+    /// <summary>
+    /// Script que armazena um <see cref="CardDeck"/> para providenciar instâncias de cartas.
+    /// </summary>
     public class CardStack : MonoBehaviour
     {
         [SerializeField] private CardDeck deck;

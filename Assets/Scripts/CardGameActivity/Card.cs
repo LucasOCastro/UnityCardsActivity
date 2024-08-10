@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace CardGameActivity
 {
+    /// <summary>
+    /// Script que representa uma instância real de um <see cref="cardDef"/>,
+    /// renderizando as informações da definição.
+    /// </summary>
     public class Card : MonoBehaviour
     {
         [SerializeField] private TextMeshPro titleText;

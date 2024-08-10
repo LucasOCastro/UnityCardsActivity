@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace CardGameActivity
 {
+    /// <summary>
+    /// Asset que armazena uma lista de <see cref="CardDef"/>.
+    /// </summary>
     [CreateAssetMenu(menuName = "Create Card Deck", fileName = "New CardDeck", order = 0)]
     public class CardDeck : ScriptableObject
     {

@@ -3,7 +3,7 @@
 namespace CardGameActivity
 {
     /// <summary>
-    /// Represents a player in the game world, containing its camera, cards and handling input.
+    /// Representa um jogador para lidar com input.
     /// </summary>
     public class Player : MonoBehaviour
     {
