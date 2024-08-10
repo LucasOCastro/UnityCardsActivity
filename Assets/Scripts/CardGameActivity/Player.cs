@@ -29,12 +29,30 @@ namespace CardGameActivity
             if (!Physics.Raycast(ray, out var collision, maxClickDistance, clickLayerMask))
                 return;
 
-            if (!collision.collider.gameObject.TryGetComponent<CardLine>(out var cardLine))
-                return;
+            if (collision.collider.TryGetComponent<CardLine>(out var cardLine))
+            {
+                HandleCardLineMousePos(cardLine, collision.point);
+            }
+            else if (collision.collider.TryGetComponent<CardStack>(out var stack))
+            {
+                HandleStackMousePos(stack);
+            }
+        }
 
+        private void HandleStackMousePos(CardStack stack)
+        {
+            if (_selectedCard || !Input.GetMouseButtonDown(0)) return;
+
+            var newCard = stack.GetCard();
+            if (newCard == null) return;
+            handCards.AddCard(newCard);
+        }
+
+        private void HandleCardLineMousePos(CardLine cardLine, Vector3 point)
+        {
             bool isClick = Input.GetMouseButtonDown(0);
             if (_selectedCard) _selectedCard.AdjustToCardLine(cardLine);
-            cardLine.HandleMouse(collision.point, isClick, ref _selectedCard);
+            cardLine.HandleMouse(point, isClick, ref _selectedCard);
         }
     }
 }

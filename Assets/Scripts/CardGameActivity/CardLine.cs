@@ -77,6 +77,12 @@ namespace CardGameActivity
                 pos += offsetBetweenCards;
             }
         }
+        
+        public void AddCard(Card newCard)
+        {
+            newCard.AdjustToCardLine(this);
+            cards.Add(newCard);
+        }
 
         #region MOUSE_HANDLING
         
